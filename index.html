@@ -195,21 +195,35 @@ section{position:relative;z-index:2;padding:clamp(90px,12vh,150px) clamp(20px,5v
   box-shadow:inset 0 0 60px rgba(15,12,11,.5)}
 .hero-photo .ph-fallback{
   position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
-  gap:10px;color:var(--grey);font-family:var(--font-mono);font-size:12px;text-align:center;padding:20px;
+  background:linear-gradient(160deg,#1c1512,#120d0b);padding:20px;
 }
-.hero-photo .ph-fallback .big{font-size:46px}
+/* clean dark circle with cyan "APS" initials when the photo can't load */
+.ph-initials{
+  display:flex;align-items:center;justify-content:center;width:132px;height:132px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#241915,#100c0b);
+  border:1px solid rgba(232,161,92,.4);box-shadow:0 0 34px rgba(232,161,92,.22);
+  font-family:var(--font-head);font-weight:700;font-size:44px;letter-spacing:2px;color:var(--cyan);
+}
 /* glowing rotating ring behind photo */
 .hero-photo-wrap::before{
   content:'';position:absolute;width:min(400px,92vw);aspect-ratio:1;border-radius:50%;
   background:conic-gradient(from 0deg,var(--cyan),var(--violet),var(--green),var(--cyan));
   filter:blur(48px);opacity:.28;z-index:-1;animation:spin 14s linear infinite;
 }
+/* subtle cyan ring that pulses slowly around the photo */
+.hero-photo-wrap::after{
+  content:'';position:absolute;width:min(340px,80vw);aspect-ratio:4/5;border-radius:24px;
+  border:2px solid var(--cyan);pointer-events:none;z-index:1;
+  animation:photoPulse 2.6s ease-out infinite;
+}
+@keyframes photoPulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.05);opacity:0}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 @media(max-width:900px){
   .hero-top{grid-template-columns:1fr;gap:30px}
   .hero-photo-wrap{order:-1}
   .hero-photo{width:min(240px,62vw)}
   .hero-photo{animation:none}
+  .hero-photo-wrap::after{width:min(240px,62vw)}
 }
 .avail-badge{
   display:inline-flex;align-items:center;gap:10px;
@@ -379,7 +393,10 @@ section{position:relative;z-index:2;padding:clamp(90px,12vh,150px) clamp(20px,5v
 .flip-role{font-family:var(--font-head);font-weight:700;font-size:22px;line-height:1.2;margin-bottom:8px}
 .flip-co{color:var(--cyan);font-size:15px;font-weight:500;margin-bottom:6px}
 .flip-date{font-family:var(--font-mono);font-size:12.5px;color:var(--grey)}
-.flip-hint{margin-top:16px;font-size:12px;color:var(--grey-dim);display:flex;align-items:center;gap:7px}
+.flip-key{margin-top:14px;font-size:13px;color:var(--grey);line-height:1.5;padding-left:18px;position:relative}
+.flip-key::before{content:'▹';position:absolute;left:0;color:var(--cyan)}
+.flip-key b{color:var(--white);font-weight:600}
+.flip-hint{margin-top:14px;font-size:12px;color:var(--grey-dim);display:flex;align-items:center;gap:7px}
 .flip-hint::before{content:'↻';color:var(--violet);font-size:15px}
 .flip-back{
   transform:rotateY(180deg);
@@ -450,6 +467,8 @@ section{position:relative;z-index:2;padding:clamp(90px,12vh,150px) clamp(20px,5v
   border-bottom:1px solid transparent;transition:.3s;
 }
 .proj-links a:hover{color:var(--cyan);border-color:var(--cyan)}
+.proj-links a.live{color:var(--green)}
+.proj-links a.live:hover{color:var(--green);border-color:var(--green)}
 @media(max-width:768px){.proj-grid{grid-template-columns:1fr}
   .proj-card{transform:none!important}
   .proj-stats{max-height:200px;opacity:1;border-top:1px solid var(--line);margin-top:4px;padding-top:16px}}
@@ -992,8 +1011,7 @@ footer .clock span{color:var(--grey)}
           <img src="images/profile.png" alt="Aditya Pratap Singh Bhadoriya"
                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
           <div class="ph-fallback">
-            <span class="big">👤</span>
-            <span>Drop <b style="color:var(--cyan)">profile.jpg</b><br>into the /images folder</span>
+            <span class="ph-initials">APS</span>
           </div>
         </div>
       </div>
@@ -1084,7 +1102,8 @@ footer .clock span{color:var(--grey)}
             <h3 class="flip-role">Senior Research Data Analyst</h3>
             <div class="flip-co">AIGGPA · Govt. of MP</div>
             <div class="flip-date">May – Jun 2026</div>
-            <div class="flip-hint">Hover to reveal impact</div>
+            <div class="flip-key">Led data research collecting <b>10,000+ citizen responses</b> across peri-urban MP.</div>
+            <div class="flip-hint">Hover for more impact</div>
           </div>
           <div class="flip-face flip-back">
             <h4>Impact</h4>
@@ -1104,7 +1123,8 @@ footer .clock span{color:var(--grey)}
             <h3 class="flip-role">Lead e-Governance Data Analyst</h3>
             <div class="flip-co">AIGGPA · Govt. of MP</div>
             <div class="flip-date">Feb – Apr 2026</div>
-            <div class="flip-hint">Hover to reveal impact</div>
+            <div class="flip-key">Identified <b>84.3% service bottleneck</b> across 13 govt services → 44 policy recommendations.</div>
+            <div class="flip-hint">Hover for more impact</div>
           </div>
           <div class="flip-face flip-back">
             <h4>Impact</h4>
@@ -1124,7 +1144,8 @@ footer .clock span{color:var(--grey)}
             <h3 class="flip-role">AI & Data Analytics Specialist</h3>
             <div class="flip-co">Stematix Labs</div>
             <div class="flip-date">Jul 2023 – Present</div>
-            <div class="flip-hint">Hover to reveal impact</div>
+            <div class="flip-key">Improved completion rates <b>35%</b> by analysing learner cohort data.</div>
+            <div class="flip-hint">Hover for more impact</div>
           </div>
           <div class="flip-face flip-back">
             <h4>Impact</h4>
@@ -1144,7 +1165,8 @@ footer .clock span{color:var(--grey)}
             <h3 class="flip-role">AI & Data Analyst · Educator</h3>
             <div class="flip-co">Rancho Labs + Govt Programs</div>
             <div class="flip-date">2021 – Present</div>
-            <div class="flip-hint">Hover to reveal impact</div>
+            <div class="flip-key">Trained <b>5,000+ students and government officials</b> in AI and data analytics.</div>
+            <div class="flip-hint">Hover for more impact</div>
           </div>
           <div class="flip-face flip-back">
             <h4>Impact</h4>
@@ -1213,6 +1235,8 @@ footer .clock span{color:var(--grey)}
         </div>
         <div class="proj-links">
           <a href="https://github.com/itsadihere/hr-analytics-dashboard" target="_blank" rel="noopener">↗ GitHub</a>
+          <!-- TODO: replace "#" with the public Power BI Service dashboard URL -->
+          <a class="live" href="#" target="_blank" rel="noopener">↗ Live Dashboard</a>
         </div>
       </article>
 
@@ -1237,6 +1261,8 @@ footer .clock span{color:var(--grey)}
         </div>
         <div class="proj-links">
           <a href="https://github.com/itsadihere/ai-sentiment-analyzer" target="_blank" rel="noopener">↗ GitHub</a>
+          <!-- TODO: replace "#" with the live Streamlit app URL -->
+          <a class="live" href="#" target="_blank" rel="noopener">↗ Live App</a>
         </div>
       </article>
 
@@ -1527,7 +1553,7 @@ footer .clock span{color:var(--grey)}
 
       <!-- 3 · Data Analyst (CURRENT) -->
       <div class="rnode current">
-        <div class="rn-badge">Hello!!</div>
+        <div class="rn-badge">You Are Here</div>
         <div class="rn-axis">
           <div class="rn-ring"></div><div class="rn-ring r2"></div>
           <div class="rn-sparks">
@@ -1793,25 +1819,27 @@ if(!isMobile){
    ========================================================== */
 (function(){
   const cards=$$('.counter-num');
+  function animate(el){
+    if(el._counted) return; el._counted=true;
+    const target=+el.dataset.count, out=el.querySelector('[data-val]');
+    const dur=2000; let t0=null;                       // 2s, easeOutCubic (fast → slow)
+    function step(ts){
+      if(!t0)t0=ts;
+      const p=Math.min((ts-t0)/dur,1);
+      const eased=1-Math.pow(1-p,3);
+      out.textContent=Math.floor(eased*target).toLocaleString('en-US');
+      if(p<1)requestAnimationFrame(step);
+      else out.textContent=target.toLocaleString('en-US');
+    }
+    requestAnimationFrame(step);
+  }
   const io=new IntersectionObserver((entries)=>{
-    entries.forEach(en=>{
-      if(en.isIntersecting){
-        const el=en.target, target=+el.dataset.count, out=el.querySelector('[data-val]');
-        let start=0, dur=1600, t0=null;
-        function step(ts){
-          if(!t0)t0=ts;
-          const p=Math.min((ts-t0)/dur,1);
-          const eased=1-Math.pow(1-p,3);
-          out.textContent=Math.floor(eased*target).toLocaleString('en-US');
-          if(p<1)requestAnimationFrame(step);
-          else out.textContent=target.toLocaleString('en-US');
-        }
-        requestAnimationFrame(step);
-        io.unobserve(el);
-      }
-    });
-  },{threshold:.6});
+    entries.forEach(en=>{ if(en.isIntersecting){ animate(en.target); io.unobserve(en.target); } });
+  },{threshold:.25});
   cards.forEach(c=>io.observe(c));
+  // Fallback: hero is the landing section — guarantee the count-up runs on load
+  // even if the counters sit just below the fold and the observer misses them.
+  window.addEventListener('load',()=>setTimeout(()=>cards.forEach(animate),700));
 })();
 
 /* ==========================================================
